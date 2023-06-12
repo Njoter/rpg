@@ -1,8 +1,8 @@
 package room;
 
-public class Room {
+public class Room implements java.io.Serializable {
 
-    private String name;
+    private final String name;
     private String description;
     private Boolean playerIsHere = false;
 
@@ -23,7 +23,7 @@ public class Room {
         this.description = description;
     }
 
-    public Boolean getPlayerIsHere() {
+    public Boolean isPlayerIsHere() {
         return playerIsHere;
     }
 

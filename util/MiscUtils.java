@@ -20,10 +20,4 @@ public class MiscUtils {
         System.out.flush();
     }
 
-    public static void enterToContinue() {
-        Scanner input = new Scanner(in);
-        System.out.println("------------------");
-        System.out.println("ENTER to continue.");
-        input.nextLine();
-    }
 }

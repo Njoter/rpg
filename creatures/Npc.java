@@ -1,19 +1,13 @@
 package creatures;
 
-import dialogue.DialogueMenu;
-import util.PrintToConsole;
-import util.PromptUserForInput;
+import dialogue.Dialogue;
 
-import java.util.ArrayList;
-
-import static java.lang.System.out;
-import static util.MiscUtils.clearScreen;
-
-public class Npc {
+public class Npc implements java.io.Serializable {
     private String name;
     private String description;
     private String race;
     private Boolean firstDialogue = true;
+    private Dialogue dialogue;
 
     public Npc(String name, String description, String race) {
         this.name = name;
@@ -51,5 +45,13 @@ public class Npc {
 
     public void setFirstDialogue(Boolean firstDialogue) {
         this.firstDialogue = firstDialogue;
+    }
+
+    public Dialogue getDialogue() {
+        return dialogue;
+    }
+
+    public void setDialogue(Dialogue dialogue) {
+        this.dialogue = dialogue;
     }
 }
