@@ -1,10 +1,9 @@
 package util;
 
-import abstractlocation.aLocation;
-
 import java.util.*;
 
 import static java.lang.System.in;
+import static util.PrintToConsole.printCharactersNumberOfTimes;
 
 public class PromptUserForInput {
 
@@ -20,20 +19,11 @@ public class PromptUserForInput {
         return input.next();
     }
 
-    public static int getHashKey(HashMap<Integer, aLocation> locationMap) {
-        int playerInput = promptForInt();
-        if (playerInput == 0) {
-            return 0;
-        }
-        int i = 1;
-        int hashKey = -1;
-        for (Integer key : locationMap.keySet()) {
-            if (i == playerInput) {
-                hashKey = key;
-                break;
-            }
-            i++;
-        }
-        return hashKey;
+    public static void enterToContinue() {
+        Scanner input = new Scanner(in);
+        String message = "ENTER to continue";
+        printCharactersNumberOfTimes('_', message.length());
+        System.out.println(message);
+        input.nextLine();
     }
 }

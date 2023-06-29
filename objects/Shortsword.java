@@ -1,19 +1,23 @@
 package objects;
 
-public class ShortSword extends aWeapon {
+public class Shortsword extends aWeapon {
 
-    public ShortSword() {
-        this.name = "Shortsword";
-        this.setDescription("Just a regular shortsword. Nothing special, really.");
-        this.setWeight(0.9);
-        this.strScaling = 'C';
-        this.dexScaling = 'C';
-        this.damage = 32;
-        this.createWeapon();
+    public Shortsword() {
+        this("Shortsword", "Just a regular shortsword. Nothing special, really.", 0.9);
     }
 
-    @Override
-    public void equipWeapon() {
-        super.equipWeapon();
+    public Shortsword(String name) {
+        this(name, "Just a regular shortsword. Nothing special, really.", 0.9);
+    }
+
+    public Shortsword(String name, String description) {
+        this(name, description, 0.9);
+    }
+
+    public Shortsword(String name, String description, double weight) {
+        super(name, description, weight);
+        this.strScaling = 'C';
+        this.dexScaling = 'C';
+        this.damage = 22;
     }
 }

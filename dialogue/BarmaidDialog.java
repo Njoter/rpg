@@ -71,10 +71,10 @@ public class BarmaidDialog {
                     dialogue.add("*Leave conversation.*", 0);
                 }
                 case 8 -> {
-                    if (Game.getPlayer().getCoppers() >= 8) {
+                    if (Game.player.getCoppers() >= 8) {
                         dialogue = new Dialogue("*The barmaid reaches over the bar and hands you the beer.*");
                         dialogue.add("'Thanks.'", 6);
-                        Game.getPlayer().setCoppers(-8);
+                        Game.player.setCoppers(-8);
                     } else {
                         dialogue = new Dialogue("*The barmaid gives a sympathetic shrug as you pull out " +
                                 "a whole lotta nothing out of your pockets.*");

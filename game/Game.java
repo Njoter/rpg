@@ -1,5 +1,6 @@
 package game;
 
+import creatures.Actor;
 import player.Player;
 import util.PrintToConsole;
 import util.PromptUserForInput;
@@ -13,16 +14,12 @@ import static util.MiscUtils.clearScreen;
 
 public class Game {
 
-    //public static final MainWindow frame = new MainWindow();
     private static GameWorld gameWorld;
-    public static Player player;
+    public static Player player = new Player("Njoter", "You are just some bastard, aren't you?",
+            "human");
 
     public static GameWorld getGameWorld() {
         return gameWorld;
-    }
-
-    public static Player getPlayer() {
-        return player;
     }
 
     public static void startGame() {
@@ -35,7 +32,6 @@ public class Game {
             gameWorld = new GameWorld();
             //player = characterCreationMenu();
         }
-
         gameWorld.enterGameWorld();
     }
 
@@ -53,7 +49,7 @@ public class Game {
             ois.close();
         } catch (Exception e) {
             out.println("No file named " + filenameGame);
-            PrintToConsole.enterToContinue("ENTER to continue");
+            PromptUserForInput.enterToContinue();
         }
 
         // Load player state.
@@ -65,7 +61,7 @@ public class Game {
             ois.close();
         } catch (Exception e) {
             out.println("No file named " + filenamePlayer);
-            PrintToConsole.enterToContinue("ENTER to continue");
+            PromptUserForInput.enterToContinue();
         }
     }
 }

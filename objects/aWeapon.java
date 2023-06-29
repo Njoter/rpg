@@ -1,34 +1,64 @@
 package objects;
 
+import game.Game;
 import player.Player;
 
-public class Weapon extends Item {
+public abstract class aWeapon extends Item {
 
-    private String stat;
-    private Character scalingTier;
-    private double scalingMultiplier;
-    private int scalingValue;
-    private int damage;
+    protected Character strScaling = null;
+    protected Character dexScaling = null;
+    protected Character intScaling = null;
+    protected int strDamageBonus = 0;
+    protected int dexDamageBonus = 0;
+    protected int intDamageBonus = 0;
+    protected int damage;
+    protected boolean equipped = false;
 
-
-
-    public void equipWeapon() {
-        switch (stat) {
-            case "str" -> {
-                scalingMultiplier = (Player.getStrength() / 100) * scalingMultiplier;
-                Player.setStrength(scalingMultiplier);
-            }
-        }
+    public aWeapon(String name, String description, double weight) {
+        super(name, description, weight);
     }
 
-    private void createWeapon() {
-        switch (scalingTier) {
-            case 'S' -> scalingMultiplier = 1.15;
-            case 'A' -> scalingMultiplier = 1.08;
-            case 'B' -> scalingMultiplier = 1.06;
-            case 'C' -> scalingMultiplier = 1.05;
-            case 'D' -> scalingMultiplier = 1.025;
-            case 'E' -> scalingMultiplier = 1.01;
-        }
+    public int getDamage() {
+        return damage;
+    }
+
+    public Character getStrScaling() {
+        return strScaling;
+    }
+
+    public Character getDexScaling() {
+        return dexScaling;
+    }
+
+    public Character getIntScaling() {
+        return intScaling;
+    }
+
+    public void setStrDamageBonus(int strDamageBonus) {
+        this.strDamageBonus = strDamageBonus;
+    }
+
+    public void setDexDamageBonus(int dexDamageBonus) {
+        this.dexDamageBonus = dexDamageBonus;
+    }
+
+    public void setIntDamageBonus(int intDamageBonus) {
+        this.intDamageBonus = intDamageBonus;
+    }
+
+    public int getStrDamageBonus() {
+        return strDamageBonus;
+    }
+
+    public int getDexDamageBonus() {
+        return dexDamageBonus;
+    }
+
+    public int getIntDamageBonus() {
+        return intDamageBonus;
+    }
+
+    public void setEquipped(boolean equipped) {
+        this.equipped = equipped;
     }
 }

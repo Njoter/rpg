@@ -1,16 +1,29 @@
 package game;
 
-import abstractlocation.aTown;
-import towntest.TownTest;
+import towntest.Town;
+import towntest.TownObjects;
 
 public class GameWorld implements java.io.Serializable {
 
-    private aTown town = new TownTest("Town", true);
+    private Town town = new Town("Town");
+    private TownObjects townObjects = new TownObjects(town);
 
     public GameWorld() {
     }
 
     public void enterGameWorld() {
-        town.enterLocation();
+
+        Game.player.currentLocation = town;
+
+        setDescriptions();
+        while (true) {
+            town.enterLocation();
+        }
+    }
+
+    private void setDescriptions() {
+        town.setDescription("""
+                You are standing in a quaint little town. It has a north district
+                and a south district.""");
     }
 }

@@ -1,4 +1,4 @@
-package player;
+package objects;
 
 import objects.aWeapon;
 
@@ -13,6 +13,5 @@ public class Unarmed extends aWeapon {
         this.strScaling = 'E';
         this.dexScaling = 'E';
         this.damage = 5;
-        createWeapon();
     }
 }

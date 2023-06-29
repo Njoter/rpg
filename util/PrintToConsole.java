@@ -1,67 +1,60 @@
 package util;
 
-import abstractlocation.aLocation;
-import menu.Choice;
+import location.BuildingInterface;
+import location.Location;
+import objects.GameObject;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Scanner;
-
-import static java.lang.System.in;
 import static java.lang.System.out;
+import static util.MiscUtils.clearScreen;
 
 public class PrintToConsole {
 
-    public static void printDescription(String name, String description) {
+    public static void printDescription(GameObject object) {
+        String name;
+        if (object instanceof BuildingInterface) {
+            name = object.getName() + " (exterior)";
+        } else {
+            name = object.getName();
+        }
+        clearScreen();
         out.println(name);
         for (int i = 0; i < name.length() + 1; i++) {
             out.print("-");
         }
         out.println();
-        out.println(description);
+        out.println(object.getDescription());
     }
 
-    public static void printChoices(LinkedHashMap<Integer, Choice> choiceHash) {
-        int firstStringLength = 0;
-        for (Choice choice : choiceHash.values()) {
-            firstStringLength = choice.getString().length();
-            break;
-        }
-        printCharactersNumberOfTimes('-', firstStringLength + 3);
-
-        int i = 1;
-        for (Choice choice : choiceHash.values()) {
-            if (i != choiceHash.size()) {
-                out.print(i + ": ");
-            } else {
-                out.print(0 + ": ");
-            }
-            out.println(choice.getString());
-            i++;
-        }
+    public static void printNarrativeMessage(String message) {
+        MiscUtils.clearScreen();
+        out.println(message);
+        PromptUserForInput.enterToContinue();
     }
 
-    public static void printLocations(HashMap<Integer, aLocation> locationMap) {
-        int firstStringLength = 0;
-        for (aLocation l : locationMap.values()) {
-            firstStringLength = l.getName().length();
-            break;
+    public static void knockOnDoor() {
+        MiscUtils.clearScreen();
+        for (int i = 0; i < 3; i++) {
+            System.out.print("*knock* ");
+            MiscUtils.wait(500);
         }
-        printCharactersNumberOfTimes('-', firstStringLength + 3);
-
-        int i = 1;
-        for (aLocation l : locationMap.values()) {
-            out.print(i + ": ");
-            out.println(l.getName());
-            i++;
-        }
+        MiscUtils.wait(1000);
+        MiscUtils.clearScreen();
     }
 
-    public static void printDefaultMenus() {
+    public static void printBuildingExteriorMenu(Location building) {
+        String name = building.getName();
+        printCharactersNumberOfTimes('-', 11 + name.length());
+        out.println("1: Enter " + name + ".");
+        out.println("2: Knock on the door.");
+        out.println("3: Examine ->");
+        out.println("4: Actions ->");
+    }
+
+    public static void printDefaultMenu() {
         printCharactersNumberOfTimes('-', 12);
-        out.println("1: Go to...");
-        out.println("2: Examine...");
-        out.println("3: Actions");
+        out.println("1: Go to   ->");
+        out.println("2: Examine ->");
+        out.println("3: Actions ->");
     }
 
     public static void printChoiceCharacter() {
@@ -73,11 +66,11 @@ public class PrintToConsole {
     }
 
     public static void printChoiceOptions() {
-        out.println("90: Menu.");
+        out.println("90: Options.");
     }
 
-    public static void printChoiceBack(String message) {
-        out.println("0: " + message);
+    public static void printChoiceBack() {
+        out.println("0: Go back");
     }
 
     public static void printCharactersNumberOfTimes(char character, int numberOfTimes) {
@@ -85,12 +78,5 @@ public class PrintToConsole {
             out.print(character);
         }
         out.println();
-    }
-
-    public static void enterToContinue(String message) {
-        Scanner input = new Scanner(in);
-        printCharactersNumberOfTimes('_', message.length());
-        System.out.println(message);
-        input.nextLine();
     }
 }

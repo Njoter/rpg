@@ -21,20 +21,20 @@ public class Save {
             oosGame.close();
         } catch (Exception e){
             System.out.println("Serialization error. Game save failed.");
-            PrintToConsole.enterToContinue("ENTER to continue.");
+            PromptUserForInput.enterToContinue();
         }
         // Save player state.
         try {
             FileOutputStream fosPlayer = new FileOutputStream( (savefile + "_player.sav") );
             ObjectOutputStream oosPlayer = new ObjectOutputStream(fosPlayer);
-            oosPlayer.writeObject(Game.getPlayer());
+            oosPlayer.writeObject(Game.player);
             oosPlayer.flush();
             oosPlayer.close();
         } catch (Exception e) {
             System.out.println("Serialization error. Player save failed.");
-            PrintToConsole.enterToContinue("ENTER to continue.");
+            PromptUserForInput.enterToContinue();
         }
         System.out.println("Game saved");
-        PrintToConsole.enterToContinue("ENTER to continue.");
+        PromptUserForInput.enterToContinue();
     }
 }

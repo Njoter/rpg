@@ -1,15 +1,20 @@
 package creatures;
 
 import dialogue.Dialogue;
+import game.Stats;
+import objects.Unarmed;
 import objects.aWeapon;
+import util.MiscUtils;
+import util.PromptUserForInput;
 
-public class Npc implements java.io.Serializable {
+public abstract class Actor implements java.io.Serializable {
     private String name;
     private String description;
     private String race;
     private int healthPoints;
     private int mana;
-    private int damage;
+    private int damage = 0;
+    private int damageBonus;
     private int coppers;
     private int strength;
     private int constitution;
@@ -19,14 +24,56 @@ public class Npc implements java.io.Serializable {
     private Boolean firstDialogue = true;
     private Dialogue dialogue;
 
-    public Npc(String name, String description, String race) {
+    private aWeapon mainWeapon;
+    private aWeapon unarmed = new Unarmed();
+
+    public Actor(String name, String description, String race) {
         this.name = name;
         this.description = description;
         this.race = race;
+        equipWeapon(unarmed);
     }
 
     public void equipWeapon(aWeapon weapon) {
-        damage = weapon.getDamage() + weapon.getDamageBonus();
+        double strMultiplier = 0;
+        double dexMultiplier = 0;
+        double intMultiplier = 0;
+        for (int i = 0; i < Stats.getWeaponStatScaling().length; i++) {
+            if (weapon.getStrScaling() == null) {
+                strMultiplier = 0;
+            } else if (weapon.getStrScaling().equals(Stats.getWeaponStatScaling()[i])) {
+                strMultiplier = (strength / 100.0) + Stats.getWeaponScalingMultiplier()[i];
+            }
+        }
+        for (int i = 0; i < Stats.getWeaponStatScaling().length; i++) {
+            if (weapon.getDexScaling() == null) {
+                dexMultiplier = 0;
+            } else if (weapon.getDexScaling().equals(Stats.getWeaponStatScaling()[i])) {
+                dexMultiplier = (dexterity / 100.0) + Stats.getWeaponScalingMultiplier()[i];
+            }
+        }
+        for (int i = 0; i < Stats.getWeaponStatScaling().length; i++) {
+            if (weapon.getIntScaling() == null) {
+                intMultiplier = 0;
+            } else if (weapon.getIntScaling().equals(Stats.getWeaponStatScaling()[i])) {
+                intMultiplier = (intelligence / 100.0) + Stats.getWeaponScalingMultiplier()[i];
+            }
+        }
+
+        weapon.setStrDamageBonus((int)(strMultiplier * weapon.getDamage()) - damage);
+        weapon.setDexDamageBonus((int)(dexMultiplier * weapon.getDamage()) - damage);
+        weapon.setIntDamageBonus((int)(intMultiplier * weapon.getDamage()) - damage);
+        damageBonus = weapon.getStrDamageBonus() + weapon.getDexDamageBonus() + weapon.getIntDamageBonus();
+        damage = weapon.getDamage() + damageBonus;
+
+        weapon.setEquipped(true);
+        mainWeapon = weapon;
+    }
+
+    public void unequipWeapon() {
+        mainWeapon.setEquipped(false);
+        equipWeapon(unarmed);
+        unarmed.setEquipped(true);
     }
 
     public String getName() {
@@ -71,10 +118,6 @@ public class Npc implements java.io.Serializable {
 
     public int getDamage() {
         return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     public int getCoppers() {
@@ -133,11 +176,7 @@ public class Npc implements java.io.Serializable {
         this.firstDialogue = firstDialogue;
     }
 
-    public Dialogue getDialogue() {
-        return dialogue;
-    }
-
-    public void setDialogue(Dialogue dialogue) {
-        this.dialogue = dialogue;
+    public aWeapon getMainWeapon() {
+        return mainWeapon;
     }
 }
