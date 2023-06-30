@@ -76,7 +76,7 @@ public class BarmaidDialog {
                         dialogue.add("'Thanks.'", 6);
                         Game.player.setCoppers(-8);
                     } else {
-                        dialogue = new Dialogue("*The barmaid gives a sympathetic shrug as you pull out " +
+                        dialogue = new Dialogue("*The barmaid gives a sympathetic shrug as you pull " +
                                 "a whole lotta nothing out of your pockets.*");
                         dialogue.add("'Damn!", 6);
                         dialogue.add("'Crap!", 6);

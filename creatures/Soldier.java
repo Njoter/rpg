@@ -19,4 +19,9 @@ public class Soldier extends Actor {
 
         equipWeapon(shortsword);
     }
+
+    @Override
+    public void startDialogue() {
+
+    }
 }

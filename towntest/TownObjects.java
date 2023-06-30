@@ -34,22 +34,33 @@ public class TownObjects {
 
     public TownObjects(Location town) {
         placeLocationsInCorrectLocations(town);
+        placeActorsInCorrectLocations(town);
     }
 
     private void placeLocationsInCorrectLocations(Location town) {
 
         town.locationArray.add(northDistrict);
         town.locationArray.add(southDistrict);
+        northDistrict.parentLocation = town;
+        southDistrict.parentLocation = town;
 
         northDistrict.locationArray.add(southDistrict);
         northDistrict.locationArray.add(tavern);
         northDistrict.locationArray.add(weirdHouse);
         northDistrict.locationArray.add(statelyManor);
 
+        tavern.parentLocation = northDistrict;
+        weirdHouse.parentLocation = northDistrict;
+        statelyManor.parentLocation = northDistrict;
+
         southDistrict.locationArray.add(northDistrict);
         southDistrict.locationArray.add(blacksmith);
         southDistrict.locationArray.add(generalStore);
         southDistrict.locationArray.add(dilapidatedHouse);
+
+        blacksmith.parentLocation = southDistrict;
+        generalStore.parentLocation = southDistrict;
+        dilapidatedHouse.parentLocation = southDistrict;
 
         tavern.locationArray.add(mainHall);
         tavern.locationArray.add(lavatory);
@@ -58,5 +69,13 @@ public class TownObjects {
         mainHall.locationArray.add(upstairs);
         lavatory.locationArray.add(mainHall);
         upstairs.locationArray.add(mainHall);
+
+        mainHall.parentLocation = tavern;
+        lavatory.parentLocation = tavern;
+        upstairs.parentLocation = tavern;
+    }
+
+    private void placeActorsInCorrectLocations(Location town) {
+        mainHall.actorArray.add(barmaid);
     }
 }

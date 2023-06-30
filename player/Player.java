@@ -15,4 +15,9 @@ public class Player extends Actor implements java.io.Serializable {
         this.setDexterity(14);
         this.setConstitution(10);
     }
+
+    @Override
+    public void startDialogue() {
+
+    }
 }

@@ -1,5 +1,6 @@
 package util;
 
+import game.Game;
 import location.BuildingInterface;
 import location.Location;
 import objects.GameObject;
@@ -51,10 +52,18 @@ public class PrintToConsole {
     }
 
     public static void printDefaultMenu() {
-        printCharactersNumberOfTimes('-', 12);
+        printCharactersNumberOfTimes('-', 14);
         out.println("1: Go to   ->");
         out.println("2: Examine ->");
         out.println("3: Actions ->");
+    }
+
+
+    public static void printActionsMenu() {
+        clearScreen();
+        printDescription(Game.player.currentLocation);
+        printCharactersNumberOfTimes('-', 14);
+        out.println("1: Talk to ->");
     }
 
     public static void printChoiceCharacter() {

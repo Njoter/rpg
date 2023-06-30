@@ -4,8 +4,6 @@ import dialogue.Dialogue;
 import game.Stats;
 import objects.Unarmed;
 import objects.aWeapon;
-import util.MiscUtils;
-import util.PromptUserForInput;
 
 public abstract class Actor implements java.io.Serializable {
     private String name;
@@ -179,4 +177,6 @@ public abstract class Actor implements java.io.Serializable {
     public aWeapon getMainWeapon() {
         return mainWeapon;
     }
+
+    public abstract void startDialogue();
 }

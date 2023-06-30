@@ -27,8 +27,10 @@ public class Town extends Location implements TownInterface {
     public void gamePlay() {
 
         printNarrativeMessage("""
-                You are entering a small town. There are two districts here, the north district and the
-                south district. You enter the south district.""");
+                You have traveled for quite a while and your feet are hurting by the time
+                you arrive at a small sea port by the coast of Baluba Bay. This quaint, little harbor town
+                is made up of two distinct districts - The north district and the south distric.
+                Very creative, I know.""");
 
         while (true) {
 
@@ -51,8 +53,12 @@ public class Town extends Location implements TownInterface {
 
     @Override
     public void setDistrictVariables() {
-        northDistrict.setDescription("This is the northern district.");
-        southDistrict.setDescription("This is the south district.");
+        northDistrict.setDescription("""
+                Aaah, the northern district. Famous for it's many rats and drunken sailors roaming the streets at nigth.
+                Among the houses is a tavern, a weird house and a stately manor.""");
+        southDistrict.setDescription("""
+                This is the south district. There are some shops here, notably a blacksmith and a general store.
+                At the edge of the city you also find a dilapidated old house.""");
     }
 
     @Override

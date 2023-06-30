@@ -1,17 +1,20 @@
 package menu;
 
+import creatures.Actor;
 import game.Game;
 import game.Save;
 import location.BuildingInterface;
 import location.Location;
 import location.Room;
-import objects.GameObject;
-import util.PrintToConsole;
+import towntest.TownObjects;
 import util.PromptUserForInput;
+
+import java.util.ArrayList;
 
 import static java.lang.System.out;
 import static util.MiscUtils.*;
 import static util.PrintToConsole.*;
+import static util.PromptUserForInput.enterToContinue;
 import static util.PromptUserForInput.promptForInt;
 
 public class Menu {
@@ -35,15 +38,14 @@ public class Menu {
 
         BuildingInterface bi = (BuildingInterface) building;
 
-        switch  (PromptUserForInput.promptForInt()) {
+        switch  (promptForInt()) {
             case 1 -> bi.enterLocation();
             case 2 -> bi.knockOnDoor();
             case 3 -> examineMenu();
             case 4 -> actionsMenu();
             case 0 -> {
-                Location previousLocation = Game.player.previousLocation;
                 Game.player.previousLocation = Game.player.currentLocation;
-                Game.player.currentLocation = previousLocation;
+                Game.player.currentLocation = building.parentLocation;
             }
         }
     }
@@ -57,7 +59,7 @@ public class Menu {
         printChoiceInventory();
         printChoiceOptions();
 
-        switch (PromptUserForInput.promptForInt()) {
+        switch (promptForInt()) {
             case 1 -> {
                 goToLocation(location);
                 return 1;
@@ -97,7 +99,7 @@ public class Menu {
         printChoiceInventory();
         printChoiceOptions();
 
-        switch (PromptUserForInput.promptForInt()) {
+        switch (promptForInt()) {
             case 1 -> goToRoom(room);
             case 2 -> examineMenu();
             case 3 -> actionsMenu();
@@ -115,7 +117,34 @@ public class Menu {
     }
 
     private static void actionsMenu() {
+        printActionsMenu();
 
+        switch (promptForInt()) {
+            case 1 -> {
+                talkToMenu();
+            }
+        }
+    }
+
+    private static void talkToMenu() {
+        ArrayList<Actor> actorArray = Game.player.currentLocation.actorArray;
+        clearScreen();
+        if (actorArray.isEmpty()) {
+            out.println("There's no one to talk to.");
+            enterToContinue();
+            return;
+        }
+
+        out.println("Who do you want to talk to?");
+        printCharactersNumberOfTimes('-', actorArray.get(0).getName().length());
+        for (int i = 0; i < actorArray.size(); i++) {
+            out.println( (i+1) + ": " + actorArray.get(i).getName());
+        }
+        int userChoice = promptForInt();
+
+        if (userChoice > 0 && userChoice <= actorArray.size()) {
+            actorArray.get(userChoice - 1).startDialogue();
+        }
     }
 
     public static void goToLocation(Location location) {
@@ -132,7 +161,7 @@ public class Menu {
             printChoiceBack();
 
             // Prompt user for choice
-            int userChoice = PromptUserForInput.promptForInt();
+            int userChoice = promptForInt();
             // If valid choice
             if (userChoice > 0 && userChoice <= location.locationArray.size()) {
                 Location newLocation = location.locationArray.get(userChoice - 1);
@@ -165,7 +194,7 @@ public class Menu {
             printChoiceBack();
 
             // Prompt user for choice
-            int userChoice = PromptUserForInput.promptForInt();
+            int userChoice = promptForInt();
             // If valid choice
             if (userChoice > 0 && userChoice <= location.locationArray.size()) {
                 Location newLocation = location.locationArray.get(userChoice - 1);
